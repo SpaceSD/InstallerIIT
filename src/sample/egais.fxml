@@ -40,6 +40,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Драйвер для ЕГАИС">
@@ -72,23 +82,23 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </Text>
-            <ComboBox fx:id="tokenChoise" focusTraversable="false" prefWidth="200.0" promptText="Выберете токен" GridPane.halignment="RIGHT" onAction="#onClickTokenChoise">
+            <ComboBox fx:id="tokenChoise" focusTraversable="false" onAction="#onClickTokenChoise" prefWidth="200.0" promptText="Выберете токен" GridPane.halignment="RIGHT">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Рутокен" fx:id="rutokenChoise" />
-                        <String fx:value="JaCarta" fx:id="jaCartaChoise"/>
+                        <String fx:id="rutokenChoise" fx:value="Рутокен" />
+                        <String fx:id="jaCartaChoise" fx:value="JaCarta" />
                     </FXCollections>
                 </items>
             </ComboBox>
-            <StackPane fx:id="stackPaneRutoken" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" visible="false">
+            <StackPane fx:id="stackPaneRutoken" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1">
                <children>
                   <ImageView fx:id="readyToken" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../image/Ready.png" />
                      </image>
                   </ImageView>
-                  <Hyperlink fx:id="hyperlinkToken" onAction="#onClickMethodDownloadRutoken" text="Скачать" />
-                  <Text fx:id="percentDownloadRutoken" strokeType="OUTSIDE" strokeWidth="0.0" text="0 %" visible="false" />
+                  <Hyperlink fx:id="hyperlinkToken" onAction="#onClickMethodDownloadRutoken" text="Скачать" visible="false" />
+                  <Text fx:id="percentDownloadRutoken" strokeType="OUTSIDE" strokeWidth="0.0" text="Установка" visible="false" />
                </children>
             </StackPane>
              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -118,6 +128,22 @@
                      </ImageView>
                  </children>
              </StackPane>
+            <StackPane fx:id="stackPaneJaCarta" layoutX="360.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="readyToken1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../image/Ready.png" />
+                     </image>
+                  </ImageView>
+                  <Hyperlink fx:id="hyperlinkToken1" onAction="#onClickMethodDownloadRutoken" text="Скачать" visible="false" />
+                  <Text fx:id="percentDownloadRutoken1" strokeType="OUTSIDE" strokeWidth="0.0" text="0 %" visible="false" />
+               </children>
+            </StackPane>
+            <Button  fx:id="testButtonEgais" focusTraversable="false" onAction="#onClickMethodTest" mnemonicParsing="false" prefHeight="25.0" prefWidth="201.0" text="Проверить" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Button>
 
 
          </children>

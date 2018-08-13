@@ -1,13 +1,25 @@
 package action;
 
+
 import java.io.File;
+import java.io.IOException;
 
 public class rutokenDownload 			//Нечто, реализующее интерфейс Runnable
         implements Runnable		//(содержащее метод run())
 {
+
+
     public void run()		//Этот метод будет выполняться в побочном потоке
     {
-        downloadFileFromURL.downloadFileFromURL("https://files.infotecs.ru/_dl/sess/vipnet_csp/full/a16756dd816b7287770577e7080b113e/vipnet_csp_4.2_cert.zip", new File("C:\\Users\\Public\\vipnet_csp_4.2_cert.zip"));
+        downloadFileFromURL.downloadFileFromURL("http://files.iitrust.ru/utils/Rutoken/rtDrivers_4.3.2.0.exe", new File("C:\\ProgramData\\rtDrivers_4.3.2.0.exe"));
+        try {
+            Runtime.getRuntime().exec("C:\\ProgramData\\rtDrivers_4.3.2.0.exe");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
 }
 

@@ -4,17 +4,15 @@ import java.io.File;
 
 public class lengthFile {
 
-    public static String lengthFile(String st) {
+    public static double lengthFile(String st) {
 
         File file = new File(st);
         if (file.exists()) {
 
-            return String.valueOf((double) file.length()/1024);
+            return (double) file.length()/1024;
 
             }
-        else System.out.println("Файла нет!");
-
-        return st;
+        else return 0;
     }
 }
 

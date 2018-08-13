@@ -27,12 +27,18 @@ public class EgaisController {
     @FXML
     private Button backButtonEgais;
 
+    @FXML
+    private Button testButtonEgais;
+
     @FXML // fx:id="tokenChoise"
     private ComboBox<String> tokenChoise;
 
 
     @FXML // fx:id="stackPaneRutoken"
     private StackPane stackPaneRutoken;
+
+    @FXML // fx:id="stackPaneJaCarta"
+    private StackPane stackPaneJaCarta;
 
     @FXML // fx:id="readyToken"
     private ImageView readyToken;
@@ -70,7 +76,16 @@ public class EgaisController {
 
     }
 
-    static action.rutokenDownload rutokenDownloads;
+    @FXML
+    private void onClickMethodTest(javafx.event.ActionEvent event) throws IOException {
+
+        
+
+    }
+
+
+
+    public static action.rutokenDownload rutokenDownloads;
 
     @FXML
     private void onClickMethodDownloadRutoken(javafx.event.ActionEvent event) throws IOException {
@@ -80,8 +95,6 @@ public class EgaisController {
         rutokenDownloads = new action.rutokenDownload();
         Thread rutokenDownloadThready = new Thread(rutokenDownloads);	//Создание потока "rutokenDownloadThready"
         rutokenDownloadThready.start();//Запуск потока
-        percentDownloadRutoken.setText(lengthFile.lengthFile("C:\\Users\\Public\\vipnet_csp_4.2_cert.zip"));
-
 
     }
 
@@ -92,10 +105,32 @@ public class EgaisController {
         String token = tokenChoise.getValue();
 
         if (token.equals("Рутокен")) {
-            stackPaneRutoken.setVisible(true);
-            System.out.println("Видно Рутокен");
+            readyToken.setVisible(false);
+
+                stackPaneJaCarta.setVisible(false);
+                stackPaneRutoken.setVisible(true);
+                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == false) &
+                        (action.testExistInstallRutoken.testExistInstallRutoken() == false))) {
+                    hyperlinkToken.setVisible(true);
+                }
+
+                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == true) &
+                        (action.testExistInstallRutoken.testExistInstallRutoken() == false))) {
+                    Runtime.getRuntime().exec("C:\\ProgramData\\rtDrivers_4.3.2.0.exe");//Запустить ЕХЕ
+                }
+
+                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == true) &
+                        (action.testExistInstallRutoken.testExistInstallRutoken() == true)) ||
+                        (((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == false) &
+                                (action.testExistInstallRutoken.testExistInstallRutoken() == true))) {
+                    percentDownloadRutoken.setVisible(false);
+                    readyToken.setVisible(true);
+                }
+
         }else if (token.equals("JaCarta")){
-            System.out.println("Видно JaCarta");
+            stackPaneRutoken.setVisible(false);
+            stackPaneJaCarta.setVisible(true);
+
         }
         System.out.println(token);
 
