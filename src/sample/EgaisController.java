@@ -212,7 +212,7 @@ public class EgaisController {
         }
     }
 
-    //Запускаем поток проверки установки и скачивания Рутокен
+    //Запускаем поток проверки установки и скачивания JaCarta
     class jaCartaR implements Runnable {
         @Override
         public void run() {
@@ -229,9 +229,9 @@ public class EgaisController {
                 Process p = null;//Запустить ЕХЕ
                 try {
                     if ((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi")) == true){
-                        p = Runtime.getRuntime().exec("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi");
+                        p = Runtime.getRuntime().exec("cmd /C C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi");
                     } else if ((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi")) == true){
-                        p = Runtime.getRuntime().exec("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi");
+                        p = Runtime.getRuntime().exec("cmd /C C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi");
                     }
 
                 } catch (IOException e) {
@@ -242,9 +242,10 @@ public class EgaisController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == true) &
+                if (((((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi")) == true) ||
+                        ((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi")) == true)) &
                         (testExistInstallJaCarta.testExistInstallJaCarta() == true)) ||
-                        (((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == false) &
+                        ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi")) == false) || ((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi")) == false)) &
                                 (testExistInstallJaCarta.testExistInstallJaCarta() == true))) {
                     percentDownloadJaCarta.setVisible(false);
                     readyToken1.setVisible(true);

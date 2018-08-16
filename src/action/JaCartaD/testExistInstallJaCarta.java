@@ -5,7 +5,7 @@ import java.io.File;
 public class testExistInstallJaCarta {
 
     public static boolean testExistInstallJaCarta() {
-        String fileP = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Рутокен\\Панель управления Рутокен.lnk";
+        String fileP = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Аладдин Р.Д\\Единый Клиент JaCarta.lnk";
         File file = new File(fileP);
         if (file.exists()) {
 
