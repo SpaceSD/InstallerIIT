@@ -1,5 +1,7 @@
-package action;
+package action.RutokenD;
 
+
+import action.downloadFileFromURL;
 
 import java.awt.*;
 import java.io.File;
@@ -17,7 +19,7 @@ public class rutokenDownload 			//Нечто, реализующее интер�
 
             Process p = Runtime.getRuntime().exec("C:\\ProgramData\\rtDrivers_4.3.2.0.exe");//Запустить ЕХЕ
             p.waitFor();
-
+            System.out.println("метод загрузки закончился");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

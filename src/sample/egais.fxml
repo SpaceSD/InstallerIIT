@@ -101,6 +101,17 @@
                   <Text fx:id="percentDownloadRutoken" strokeType="OUTSIDE" strokeWidth="0.0" text="Установка" visible="false" />
                </children>
             </StackPane>
+             <StackPane fx:id="stackPaneJaCarta" layoutX="360.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1">
+                 <children>
+                     <ImageView fx:id="readyToken1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                         <image>
+                             <Image url="@../image/Ready.png" />
+                         </image>
+                     </ImageView>
+                     <Hyperlink fx:id="hyperlinkToken1" onAction="#onClickMethodDownloadJaCarta" text="Скачатьс" visible="false" />
+                     <Text fx:id="percentDownloadJaCarta" strokeType="OUTSIDE" strokeWidth="0.0" text="Установка" visible="false" />
+                 </children>
+             </StackPane>
              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                  <children>
                      <ImageView fx:id="readyBrowser" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -128,22 +139,7 @@
                      </ImageView>
                  </children>
              </StackPane>
-            <StackPane fx:id="stackPaneJaCarta" layoutX="360.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fx:id="readyToken1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../image/Ready.png" />
-                     </image>
-                  </ImageView>
-                  <Hyperlink fx:id="hyperlinkToken1" onAction="#onClickMethodDownloadRutoken" text="Скачать" visible="false" />
-                  <Text fx:id="percentDownloadRutoken1" strokeType="OUTSIDE" strokeWidth="0.0" text="0 %" visible="false" />
-               </children>
-            </StackPane>
-            <Button  fx:id="testButtonEgais" focusTraversable="false" onAction="#onClickMethodTest" mnemonicParsing="false" prefHeight="25.0" prefWidth="201.0" text="Проверить" GridPane.halignment="CENTER" GridPane.rowIndex="13">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </Button>
+
 
 
          </children>
