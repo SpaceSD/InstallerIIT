@@ -231,6 +231,7 @@ public class EgaisController {
             stackPaneRutoken.setVisible(true);
             if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe")) == false) &
                     (testExistInstallRutoken.testExistInstallRutoken() == false))) {
+                readyToken.setVisible(false);
                 hyperlinkToken.setVisible(true);
 
             }
@@ -275,6 +276,7 @@ public class EgaisController {
             stackPaneRutoken.setVisible(false);
             if (((((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi")) == false) || ((action.testExistsFile.testExistsFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi")) == false))&
                     (testExistInstallJaCarta.testExistInstallJaCarta() == false))) {
+                readyToken1.setVisible(false);
                 hyperlinkToken1.setVisible(true);
 
             }
@@ -322,8 +324,9 @@ public class EgaisController {
         @Override
         public void run() {
             stackPaneFsrarCrypto.setVisible(true);
-            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
-                    (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == false))) {
+            if (((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
+                    (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == false)) {
+                readyFsrarCrypto.setVisible(false);
                 hyperlinkFsrarCrypto.setVisible(true);
 
             }
