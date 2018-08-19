@@ -1,9 +1,10 @@
 package sample;
 
+import action.FsrarCrypto.fsrarCryptoDownload;
 import action.JaCartaD.jaCartaDownload;
+import action.JaCartaD.testExistInstallJaCarta;
 import action.RutokenD.rutokenDownload;
 import action.RutokenD.testExistInstallRutoken;
-import action.JaCartaD.testExistInstallJaCarta;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,23 +42,14 @@ public class EgaisController {
     @FXML // fx:id="stackPaneJaCarta"
     private StackPane stackPaneJaCarta;
 
+    @FXML // fx:id="stackPaneFsrarCrypto"
+    private StackPane stackPaneFsrarCrypto;
+
     @FXML // fx:id="readyToken"
     private ImageView readyToken;
 
     @FXML // fx:id="readyToken1"
     private ImageView readyToken1;
-
-    @FXML // fx:id="hyperlinkToken"
-    private Hyperlink hyperlinkToken;
-
-    @FXML // fx:id="hyperlinkToken1"
-    private Hyperlink hyperlinkToken1;
-
-    @FXML // fx:id="percentDownloadRutoken"
-    private Text percentDownloadRutoken;
-
-    @FXML // fx:id="percentDownloadJaCarta"
-    private Text percentDownloadJaCarta;
 
     @FXML // fx:id="readyBrowser"
     private ImageView readyBrowser;
@@ -67,14 +58,40 @@ public class EgaisController {
     private ImageView readyFsrarCrypto;
 
     @FXML // fx:id="readyUtm"
-
     private ImageView readyUtm;
+
+    @FXML // fx:id="hyperlinkToken"
+    private Hyperlink hyperlinkToken;
+
+    @FXML // fx:id="hyperlinkToken1"
+    private Hyperlink hyperlinkToken1;
+
+    @FXML // fx:id="hyperlinkFsrarCrypto"
+    private Hyperlink hyperlinkFsrarCrypto;
+
+    @FXML // fx:id="percentDownloadRutoken"
+    private Text percentDownloadRutoken;
+
+    @FXML // fx:id="percentDownloadJaCarta"
+    private Text percentDownloadJaCarta;
+
+    @FXML // fx:id="percentDownloadFsrarCrypto"
+    private Text percentDownloadFsrarCrypto;
+
+    @FXML // fx:id="updateBrowser"
+    private Text updateBrowser;
+
+
     public static rutokenDownload rutokenDownloads;
     private redyTokenAfterInstallRutoken redyTokenAfterInstallRutoken;
     public static jaCartaDownload jaCartaDownloads;
     private redyTokenAfterInstallJaCarta redyTokenAfterInstallJaCarta;
+    public static fsrarCryptoDownload fsrarCryptoDownloads;
+    private redyFsrarCryptoAfterInstall redyFsrarCryptoAfterInstall;
 
-// This method is called by the FXMLLoader when initialization is complete
+
+
+    // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert tokenChoise != null : "fx:id=\"tokenChoise\" was not injected: check your FXML file 'egais.fxml'.";
         assert readyToken != null : "fx:id=\"readyToken\" was not injected: check your FXML file 'egais.fxml'.";
@@ -114,6 +131,16 @@ public class EgaisController {
         }
     }
 
+// Поток для проставления готовности установки FsrarCrypto
+    class redyFsrarCryptoAfterInstall implements Runnable {
+
+        @Override
+        public void run() {
+
+            percentDownloadJaCarta.setVisible(false);
+            readyToken1.setVisible(true);
+        }
+    }
     //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки Рутокен
     @FXML
     private void onClickMethodDownloadRutoken(javafx.event.ActionEvent event) throws IOException {
@@ -160,6 +187,33 @@ public class EgaisController {
                         redyTokenAfterInstallJaCartaThredy.start();
                     }else {
                         percentDownloadJaCarta.setText("Ошибка загрузки");
+                        System.out.println("БЛЯ");
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки JaCarta
+    @FXML
+    private void onClickMethodDownloadFsrarCrypto(javafx.event.ActionEvent event) throws IOException {
+
+        hyperlinkFsrarCrypto.setVisible(false);
+        percentDownloadFsrarCrypto.setVisible(true);
+        fsrarCryptoDownloads = new fsrarCryptoDownload();
+        Thread fsrarCryptoDownloadThready = new Thread(fsrarCryptoDownloads);    //Создание потока "fsrarCryptoDownloadThready"
+        fsrarCryptoDownloadThready.start();//Запуск потока
+        redyFsrarCryptoAfterInstall = new redyFsrarCryptoAfterInstall();
+        Thread redyFsrarCryptoAfterInstallThredy = new Thread(redyFsrarCryptoAfterInstall);
+        new Thread(() -> {
+            while (fsrarCryptoDownloadThready.isAlive() == true) {
+                if (fsrarCryptoDownloadThready.isAlive() == false) {
+                    if (testExistInstallJaCarta.testExistInstallJaCarta() == true){
+                        System.out.println("redyFsrarCryptoAfterInstallThredy.start");
+                        redyFsrarCryptoAfterInstallThredy.start();
+                    }else {
+                        percentDownloadFsrarCrypto.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
                     }
                 }
@@ -289,7 +343,18 @@ public class EgaisController {
         }
         System.out.println(token);
 
+        if (action.BrowserIE.BrowserIE.BrowserIE() == true){
+            readyBrowser.setVisible(true);
+            updateBrowser.setVisible(false);
+        }else {
+            readyBrowser.setVisible(false);
+            updateBrowser.setVisible(true);
+        }
 
+        stackPaneFsrarCrypto.setVisible(true);
     }
+
+
+
 }
 
