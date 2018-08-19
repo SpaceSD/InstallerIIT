@@ -1,6 +1,7 @@
 package sample;
 
 import action.FsrarCrypto.fsrarCryptoDownload;
+import action.FsrarCrypto.testExistInstallFsrarCrypto;
 import action.JaCartaD.jaCartaDownload;
 import action.JaCartaD.testExistInstallJaCarta;
 import action.RutokenD.rutokenDownload;
@@ -266,7 +267,7 @@ public class EgaisController {
         }
     }
 
-    //Запускаем поток проверки установки и скачивания JaCarta
+//Запускаем поток проверки установки и скачивания JaCarta
     class jaCartaR implements Runnable {
         @Override
         public void run() {
@@ -316,8 +317,52 @@ public class EgaisController {
         }
     }
 
+//Запускаем поток проверки установки и скачивания FsrarCrypto
+    class fsrarCryptoR implements Runnable {
+        @Override
+        public void run() {
+            stackPaneFsrarCrypto.setVisible(true);
+            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
+                    (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == false))) {
+                hyperlinkFsrarCrypto.setVisible(true);
+
+            }
+
+            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == true) &
+                    (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == false))) {
+                Process p = null;//Запустить ЕХЕ
+                try {
+                    p = Runtime.getRuntime().exec("cmd /c \"C:\\ProgramData\\setup-ie.exe\"");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    p.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == true) &
+                        (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true)) ||
+                        (((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
+                                (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
+                    percentDownloadFsrarCrypto.setVisible(false);
+                    readyFsrarCrypto.setVisible(true);
+                }
+            }
+
+            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == true) &
+                    (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true)) ||
+                    (((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
+                            (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
+                percentDownloadFsrarCrypto.setVisible(false);
+                readyFsrarCrypto.setVisible(true);
+            }
+        }
+    }
+
     static rutokensR rutokensRs;
     static jaCartaR jaCartaRs;
+    static fsrarCryptoR fsrarCryptoRs;
 //Обработчик выбора в окне выбора Токена
     @FXML
     private void onClickTokenChoise(javafx.event.ActionEvent event) throws IOException {
@@ -328,8 +373,8 @@ public class EgaisController {
             stackPaneRutoken.setVisible(true);
             stackPaneJaCarta.setVisible(false);
             rutokensRs = new rutokensR();
-            Thread rutokenR = new Thread(rutokensRs);
-            rutokenR.start();
+            Thread rutoken = new Thread(rutokensRs);
+            rutoken.start();
             readyToken.setVisible(false);
 
         } else if (token.equals("JaCarta")) {
@@ -352,6 +397,9 @@ public class EgaisController {
         }
 
         stackPaneFsrarCrypto.setVisible(true);
+        fsrarCryptoRs = new fsrarCryptoR();
+        Thread fsrarCrypto = new Thread(fsrarCryptoRs);
+        fsrarCrypto.start();
     }
 
 

@@ -16,7 +16,7 @@ public class fsrarCryptoDownload            //Нечто, реализующее
         try {
             downloadFileFromURL.downloadFileFromURL("https://service.egais.ru/files/setup-ie.exe", new File("C:\\ProgramData\\setup-ie.exe"));
 
-            Process p = Runtime.getRuntime().exec("C:\\ProgramData\\setup-ie.exe");//Запустить ЕХЕ
+            Process p = Runtime.getRuntime().exec("cmd /c \"C:\\ProgramData\\setup-ie.exe\"");//Запустить ЕХЕ
             p.waitFor();
             System.out.println("метод загрузки закончился");
         } catch (IOException e) {
