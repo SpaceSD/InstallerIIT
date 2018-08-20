@@ -6,6 +6,7 @@ import action.JaCartaD.jaCartaDownload;
 import action.JaCartaD.testExistInstallJaCarta;
 import action.RutokenD.rutokenDownload;
 import action.RutokenD.testExistInstallRutoken;
+import action.BrowserIE.browserDownload;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -70,6 +71,9 @@ public class EgaisController {
     @FXML // fx:id="hyperlinkFsrarCrypto"
     private Hyperlink hyperlinkFsrarCrypto;
 
+    @FXML // fx:id="hyperlinkUpdateBrowser"
+    private Hyperlink hyperlinkUpdateBrowser;
+
     @FXML // fx:id="percentDownloadRutoken"
     private Text percentDownloadRutoken;
 
@@ -89,7 +93,8 @@ public class EgaisController {
     private redyTokenAfterInstallJaCarta redyTokenAfterInstallJaCarta;
     public static fsrarCryptoDownload fsrarCryptoDownloads;
     private redyFsrarCryptoAfterInstall redyFsrarCryptoAfterInstall;
-
+    private static browserDownload browserDownload;
+    private redyBrowserInstall redyBrowserInstall;
 
 
     // This method is called by the FXMLLoader when initialization is complete
@@ -142,7 +147,19 @@ public class EgaisController {
             readyToken1.setVisible(true);
         }
     }
-    //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки Рутокен
+
+// Поток для проставления готовности установки FsrarCrypto
+    class redyBrowserInstall implements Runnable {
+
+        @Override
+        public void run() {
+
+            updateBrowser.setVisible(false);
+            readyBrowser.setVisible(true);
+        }
+    }
+
+//Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки Рутокен
     @FXML
     private void onClickMethodDownloadRutoken(javafx.event.ActionEvent event) throws IOException {
 
@@ -196,7 +213,7 @@ public class EgaisController {
 
     }
 
-    //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки JaCarta
+//Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки FsrarCrypto
     @FXML
     private void onClickMethodDownloadFsrarCrypto(javafx.event.ActionEvent event) throws IOException {
 
@@ -215,6 +232,34 @@ public class EgaisController {
                         redyFsrarCryptoAfterInstallThredy.start();
                     }else {
                         percentDownloadFsrarCrypto.setText("Ошибка загрузки");
+                        System.out.println("БЛЯ");
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+//Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки IE
+    @FXML
+    private void onClickMethodDownloadUpdateBrowser(javafx.event.ActionEvent event) throws IOException {
+
+        hyperlinkUpdateBrowser.setVisible(false);
+        updateBrowser.setVisible(true);
+        browserDownload = new browserDownload();
+
+        Thread browserDownloadsThready = new Thread(browserDownload);    //Создание потока "fsrarCryptoDownloadThready"
+        browserDownloadsThready.start();//Запуск потока
+        redyBrowserInstall = new redyBrowserInstall();
+        Thread redyBrowserInstallThredy = new Thread(redyBrowserInstall);
+        new Thread(() -> {
+            while (browserDownloadsThready.isAlive() == true) {
+                if (browserDownloadsThready.isAlive() == false) {
+                    if (testExistInstallJaCarta.testExistInstallJaCarta() == true){
+                        System.out.println("redyFsrarCryptoAfterInstallThredy.start");
+                        redyBrowserInstallThredy.start();
+                    }else {
+                        updateBrowser.setText("Установите обновление");
                         System.out.println("БЛЯ");
                     }
                 }
@@ -373,6 +418,7 @@ public class EgaisController {
         String token = tokenChoise.getValue();
 
         if (token.equals("Рутокен")) {
+            hyperlinkUpdateBrowser.setVisible(false);
             stackPaneRutoken.setVisible(true);
             stackPaneJaCarta.setVisible(false);
             rutokensRs = new rutokensR();
@@ -381,6 +427,7 @@ public class EgaisController {
             readyToken.setVisible(false);
 
         } else if (token.equals("JaCarta")) {
+            hyperlinkUpdateBrowser.setVisible(false);
             stackPaneRutoken.setVisible(false);
             stackPaneJaCarta.setVisible(true);
             jaCartaRs = new jaCartaR();
@@ -392,11 +439,13 @@ public class EgaisController {
         System.out.println(token);
 
         if (action.BrowserIE.BrowserIE.BrowserIE() == true){
+            hyperlinkUpdateBrowser.setVisible(false);
             readyBrowser.setVisible(true);
             updateBrowser.setVisible(false);
         }else {
+            updateBrowser.setVisible(false);
             readyBrowser.setVisible(false);
-            updateBrowser.setVisible(true);
+            hyperlinkUpdateBrowser.setVisible(true);
         }
 
         stackPaneFsrarCrypto.setVisible(true);
