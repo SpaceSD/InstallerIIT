@@ -114,7 +114,8 @@
                              <Image url="@../image/Ready.png" />
                          </image>
                      </ImageView>
-                  <Text fx:id="updateBrowser" strokeType="OUTSIDE" strokeWidth="0.0" text="Обновите браузер" visible="false" />
+                  <Text fx:id="updateBrowser" strokeType="OUTSIDE" strokeWidth="0.0" text="Ссылка в браузере" visible="false" />
+                  <Hyperlink fx:id="hyperlinkUpdateBrowser" focusTraversable="false" onAction="#onClickMethodDownloadUpdateBrowser" text="Обновите браузер" visible="false" />
                  </children>
              </StackPane>
              <StackPane fx:id="stackPaneFsrarCrypto" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
