@@ -1,12 +1,14 @@
 package sample;
 
+import action.BrowserIE.browserDownload;
 import action.FsrarCrypto.fsrarCryptoDownload;
 import action.FsrarCrypto.testExistInstallFsrarCrypto;
 import action.JaCartaD.jaCartaDownload;
 import action.JaCartaD.testExistInstallJaCarta;
 import action.RutokenD.rutokenDownload;
 import action.RutokenD.testExistInstallRutoken;
-import action.BrowserIE.browserDownload;
+import action.UTM.testExistInstallUTM;
+import action.UTM.utmDownload;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -59,8 +61,8 @@ public class EgaisController {
     @FXML // fx:id="readyFsrarCrypto"
     private ImageView readyFsrarCrypto;
 
-    @FXML // fx:id="readyUtm"
-    private ImageView readyUtm;
+    @FXML // fx:id="readyUTM"
+    private ImageView readyUTM;
 
     @FXML // fx:id="hyperlinkToken"
     private Hyperlink hyperlinkToken;
@@ -70,6 +72,9 @@ public class EgaisController {
 
     @FXML // fx:id="hyperlinkFsrarCrypto"
     private Hyperlink hyperlinkFsrarCrypto;
+
+    @FXML // fx:id="hyperlinkUTM"
+    private Hyperlink hyperlinkUTM;
 
     @FXML // fx:id="hyperlinkUpdateBrowser"
     private Hyperlink hyperlinkUpdateBrowser;
@@ -83,6 +88,9 @@ public class EgaisController {
     @FXML // fx:id="percentDownloadFsrarCrypto"
     private Text percentDownloadFsrarCrypto;
 
+    @FXML // fx:id="percentDownloadUTM"
+    private Text percentDownloadUTM;
+
     @FXML // fx:id="updateBrowser"
     private Text updateBrowser;
 
@@ -95,6 +103,8 @@ public class EgaisController {
     private redyFsrarCryptoAfterInstall redyFsrarCryptoAfterInstall;
     private static browserDownload browserDownload;
     private redyBrowserInstall redyBrowserInstall;
+    public static utmDownload utmDownloads;
+    private redyAfterInstallUTM redyAfterInstallUTM;
 
 
     // This method is called by the FXMLLoader when initialization is complete
@@ -148,7 +158,7 @@ public class EgaisController {
         }
     }
 
-// Поток для проставления готовности установки FsrarCrypto
+// Поток для проставления готовности установки Browser
     class redyBrowserInstall implements Runnable {
 
         @Override
@@ -156,6 +166,17 @@ public class EgaisController {
 
             updateBrowser.setVisible(false);
             readyBrowser.setVisible(true);
+        }
+    }
+
+// Поток для проставления готовности установки Рутокен
+    class redyAfterInstallUTM implements Runnable {
+
+        @Override
+        public void run() {
+
+            percentDownloadUTM.setVisible(false);
+            readyUTM.setVisible(true);
         }
     }
 
@@ -232,6 +253,33 @@ public class EgaisController {
                         redyFsrarCryptoAfterInstallThredy.start();
                     }else {
                         percentDownloadFsrarCrypto.setText("Ошибка загрузки");
+                        System.out.println("БЛЯ");
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+//Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки UTM
+    @FXML
+    private void onClickMethodDownloadUTM(javafx.event.ActionEvent event) throws IOException {
+
+        hyperlinkUTM.setVisible(false);
+        percentDownloadUTM.setVisible(true);
+        utmDownloads = new utmDownload();
+        Thread utmDownloadThready = new Thread(utmDownloads);    //Создание потока "fsrarCryptoDownloadThready"
+        utmDownloadThready.start();//Запуск потока
+        redyAfterInstallUTM = new redyAfterInstallUTM();
+        Thread redyAfterInstallUTMThredy = new Thread(redyAfterInstallUTM);
+        new Thread(() -> {
+            while (utmDownloadThready.isAlive() == true) {
+                if (utmDownloadThready.isAlive() == false) {
+                    if (testExistInstallJaCarta.testExistInstallJaCarta() == true){
+                        System.out.println("redyAfterInstallUTMThredy.start");
+                        redyAfterInstallUTMThredy.start();
+                    }else {
+                        percentDownloadUTM.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
                     }
                 }
@@ -408,9 +456,54 @@ public class EgaisController {
         }
     }
 
+    //Запускаем поток проверки установки и скачивания FsrarCrypto
+    class UTMR implements Runnable {
+        @Override
+        public void run() {
+
+            if (((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == false) &
+                    (testExistInstallUTM.testExistInstallUTM() == false)) {
+                readyUTM.setVisible(false);
+                hyperlinkUTM.setVisible(true);
+
+            }
+
+            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == true) &
+                    (testExistInstallUTM.testExistInstallUTM() == false))) {
+                Process p = null;//Запустить ЕХЕ
+                try {
+                    p = Runtime.getRuntime().exec("cmd /c \"C:\\ProgramData\\realegaissetup-3_0_8.exe\"");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    p.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == true) &
+                        (testExistInstallUTM.testExistInstallUTM() == true)) ||
+                        (((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == false) &
+                                (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
+                    percentDownloadUTM.setVisible(false);
+                    readyUTM.setVisible(true);
+                }
+            }
+
+            if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == true) &
+                    (testExistInstallUTM.testExistInstallUTM() == true)) ||
+                    (((action.testExistsFile.testExistsFile("C:\\ProgramData\\realegaissetup-3_0_8.exe")) == false) &
+                            (testExistInstallUTM.testExistInstallUTM() == true))) {
+                percentDownloadUTM.setVisible(false);
+                readyUTM.setVisible(true);
+            }
+        }
+    }
+
     static rutokensR rutokensRs;
     static jaCartaR jaCartaRs;
     static fsrarCryptoR fsrarCryptoRs;
+    static UTMR UTMRs;
 //Обработчик выбора в окне выбора Токена
     @FXML
     private void onClickTokenChoise(javafx.event.ActionEvent event) throws IOException {
@@ -452,6 +545,10 @@ public class EgaisController {
         fsrarCryptoRs = new fsrarCryptoR();
         Thread fsrarCrypto = new Thread(fsrarCryptoRs);
         fsrarCrypto.start();
+        //hyperlinkUTM.setVisible(true);
+        UTMRs = new UTMR();
+        Thread UTM = new Thread(UTMRs);
+        UTM.start();
     }
 
 

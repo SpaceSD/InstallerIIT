@@ -131,11 +131,13 @@
              </StackPane>
              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                  <children>
-                     <ImageView fx:id="readyUtm" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <ImageView fx:id="readyUTM" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                          <image>
                              <Image url="@../image/Ready.png" />
                          </image>
                      </ImageView>
+                  <Hyperlink fx:id="hyperlinkUTM" focusTraversable="false" onAction="#onClickMethodDownloadUTM" text="Скачать" visible="false" />
+                  <Text fx:id="percentDownloadUTM" strokeType="OUTSIDE" strokeWidth="0.0" text="Установка" visible="false" />
                  </children>
              </StackPane>
 

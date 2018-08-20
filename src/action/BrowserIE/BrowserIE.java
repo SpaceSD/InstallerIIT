@@ -12,6 +12,8 @@ public class BrowserIE {
         Process regadd002 = Runtime.getRuntime().exec("cmd /C reg add \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\ZoneMap\\Domains\\egais.ru\" /v https /t REG_DWORD /d 00000002");
         Process p = Runtime.getRuntime().exec("cmd /C reg query \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Internet Explorer\" /v \"Version\" > \"C:\\ProgramData\\IEV.txt\"");
         try {
+            regadd001.destroy();
+            regadd002.destroy();
             p.waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
