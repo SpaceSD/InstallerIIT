@@ -27,9 +27,15 @@ public class BrowserIE {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        String path = "";
         if (valueOK.contains("0x1") == false){
-            Process regadd000 = Runtime.getRuntime().exec("cmd /c start /wait C:\\GitSpace\\InstallerIIT\\src\\action\\BrowserIE\\egais.bat");
+            try {
+            path = new java.io.File("src\\egais.bat").getCanonicalPath();
+                System.out.println(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+            Process regadd000 = Runtime.getRuntime().exec("cmd /c start /wait " + path);
         }
 
 
