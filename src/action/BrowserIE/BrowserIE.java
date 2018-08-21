@@ -8,12 +8,34 @@ import java.io.IOException;
 public class BrowserIE {
     public static boolean BrowserIE() throws IOException {
         String value = "";
-        Process regadd001 = Runtime.getRuntime().exec("cmd /C reg add \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\ZoneMap\\Domains\\egais.ru\" /v http /t REG_DWORD /d 00000002 ");
-        Process regadd002 = Runtime.getRuntime().exec("cmd /C reg add \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\ZoneMap\\Domains\\egais.ru\" /v https /t REG_DWORD /d 00000002");
+        String valueOK = "";
+
+        Process re = Runtime.getRuntime().exec("cmd /C reg query \"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Zones\\2\" /v \"ok\" > \"C:\\ProgramData\\reOK.txt\"");
+        try {
+
+            re.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileInputStream inFileOK = new FileInputStream("C:\\ProgramData\\reOK.txt");
+            byte[] strOK = new byte[inFileOK.available()];
+            inFileOK.read(strOK);
+            valueOK = new String(strOK);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (valueOK.contains("0x1") == false){
+            Process regadd000 = Runtime.getRuntime().exec("cmd /c start /wait C:\\GitSpace\\InstallerIIT\\src\\action\\BrowserIE\\egais.bat");
+        }
+
+
         Process p = Runtime.getRuntime().exec("cmd /C reg query \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Internet Explorer\" /v \"Version\" > \"C:\\ProgramData\\IEV.txt\"");
         try {
-            regadd001.destroy();
-            regadd002.destroy();
+
             p.waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
