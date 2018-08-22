@@ -9,6 +9,7 @@ import action.RutokenD.rutokenDownload;
 import action.RutokenD.testExistInstallRutoken;
 import action.UTM.testExistInstallUTM;
 import action.UTM.utmDownload;
+import action.lengthFile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -22,7 +23,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import action.lengthFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -443,7 +443,7 @@ public class EgaisController {
                     (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == false)) {
                 readyFsrarCrypto.setVisible(false);
                 hyperlinkFsrarCrypto.setVisible(true);
-
+                System.out.println("проверили 1 условие установки фсрар");
             }
 
             if ((((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == true) &
@@ -451,6 +451,7 @@ public class EgaisController {
                 Process p = null;//Запустить ЕХЕ
                 try {
                     p = Runtime.getRuntime().exec("cmd /c \"C:\\ProgramData\\setup-ie.exe\"");
+                    System.out.println("запустили 2 условие проверки и установку фсрар");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -463,6 +464,7 @@ public class EgaisController {
                         (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true)) ||
                         (((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
                                 (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
+                    System.out.println("запустили 3 условие проверки и реди");
                     percentDownloadFsrarCrypto.setVisible(false);
                     readyFsrarCrypto.setVisible(true);
                     progressBarFsrar.setVisible(false);
@@ -473,6 +475,7 @@ public class EgaisController {
                     (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true)) ||
                     (((action.testExistsFile.testExistsFile("C:\\ProgramData\\setup-ie.exe")) == false) &
                             (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
+                System.out.println("запустили 4 условие проверки и реди");
                 percentDownloadFsrarCrypto.setVisible(false);
                 readyFsrarCrypto.setVisible(true);
                 progressBarFsrar.setVisible(false);
@@ -544,12 +547,15 @@ public class EgaisController {
             rutokensRs = new rutokensR();
             Thread rutoken = new Thread(rutokensRs);
             rutoken.start();
+            File RUTOKENFile = new File("C:\\ProgramData\\rtDrivers_4.3.2.0.exe");
+            if (RUTOKENFile.exists()){
             new Thread(()->{
                 while ( lengthFile.lengthFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe") < 14992){
                     double progR = ((lengthFile.lengthFile("C:\\ProgramData\\rtDrivers_4.3.2.0.exe"))*1)/14992;
                     progressBarToken.setProgress(progR);
                 }
             }).start();
+            }
             readyToken.setVisible(false);
 
         } else if (token.equals("JaCarta")) {
@@ -559,13 +565,14 @@ public class EgaisController {
             jaCartaRs = new jaCartaR();
             Thread jaCarta = new Thread(jaCartaRs);
             jaCarta.start();
+            File JaCartaFile6 = new File("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi");
+            File JaCartaFile8 = new File("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi");
+            if (JaCartaFile6.exists() || JaCartaFile8.exists()){
             new Thread(()->{
                 while ( (lengthFile.lengthFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi") < 64647) ||
                         (lengthFile.lengthFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi") < 44471)){
-                    String file64 = "C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi";
-                    File file6 = new File(file64);
-                    String file86 = "C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi";
-                    File file8 = new File(file86);
+                    File file6 = new File("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi");
+                    File file8 = new File("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x86_ru-Ru.msi");
                     if (file6.exists()){
                         double progJ = ((lengthFile.lengthFile("C:\\ProgramData\\JaCartaUnifiedClient_2.11.0.1754_win-x64_ru-Ru.msi"))*1)/64647;
                         progressBarToken.setProgress(progJ);
@@ -576,6 +583,7 @@ public class EgaisController {
                     }
                 }
             }).start();
+            }
             readyToken1.setVisible(false);
 
         }
@@ -595,22 +603,29 @@ public class EgaisController {
         fsrarCryptoRs = new fsrarCryptoR();
         Thread fsrarCrypto = new Thread(fsrarCryptoRs);
         fsrarCrypto.start();
+        System.out.println("fsrarCrypto.start()");
         //hyperlinkUTM.setVisible(true);
+        File EFSRARFile = new File("C:\\ProgramData\\setup-ie.exe");
+        if (EFSRARFile.exists()){
         new Thread(()->{
             while ( lengthFile.lengthFile("C:\\ProgramData\\setup-ie.exe") < 3934){
                 double progF = ((lengthFile.lengthFile("C:\\ProgramData\\setup-ie.exe"))*1)/3934;
                 progressBarFsrar.setProgress(progF);
             }
         }).start();
+        }
         UTMRs = new UTMR();
         Thread UTM = new Thread(UTMRs);
         UTM.start();
+
+        File EUTMFile = new File("C:\\ProgramData\\realegaissetup-3_0_8.exe");
+        if (EUTMFile.exists()){
         new Thread(()->{
             while ( lengthFile.lengthFile("C:\\ProgramData\\realegaissetup-3_0_8.exe") < 96433){
                 double progU = ((lengthFile.lengthFile("C:\\ProgramData\\realegaissetup-3_0_8.exe"))*1)/96433;
                 progressBarUTM.setProgress(progU);
             }
-        }).start();
+        }).start();}
     }
 
 
