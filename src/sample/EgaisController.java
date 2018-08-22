@@ -15,12 +15,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -98,13 +96,16 @@ public class EgaisController {
     private Text updateBrowser;
 
     @FXML // fx:id="progressBarToken"
-    private ProgressBar progressBarToken;
+    private ProgressIndicator progressBarToken;
 
     @FXML // fx:id="progressBarFsrar"
-    private ProgressBar progressBarFsrar;
+    private ProgressIndicator progressBarFsrar;
 
     @FXML // fx:id="progressBarUTM"
-    private ProgressBar progressBarUTM;
+    private ProgressIndicator progressBarUTM;
+
+    @FXML // fx:id="BOXprogress"
+    private VBox BOXprogress;
 
 
 
@@ -202,7 +203,7 @@ public class EgaisController {
         rutokenDownloads = new rutokenDownload();
         Thread rutokenDownloadThready = new Thread(rutokenDownloads);    //Создание потока "rutokenDownloadThready"
         rutokenDownloadThready.start();//Запуск потока
-        progressBarToken.setVisible(true);
+        BOXprogress.setVisible(true);
         redyTokenAfterInstallRutoken = new redyTokenAfterInstallRutoken();
         Thread redyTokenAfterInstallRutokenThredy = new Thread(redyTokenAfterInstallRutoken);
         new Thread(() -> {
@@ -211,7 +212,7 @@ public class EgaisController {
                     if (testExistInstallRutoken.testExistInstallRutoken() == true){
                         System.out.println("redyTokenAfterInstallRutokenThredy.start");
                         redyTokenAfterInstallRutokenThredy.start();
-                        progressBarToken.setVisible(false);
+                        BOXprogress.setVisible(false);
                     }else {
                         percentDownloadRutoken.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
@@ -225,7 +226,7 @@ public class EgaisController {
 //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки JaCarta
     @FXML
     private void onClickMethodDownloadJaCarta(javafx.event.ActionEvent event) throws IOException {
-        progressBarToken.setVisible(true);
+        BOXprogress.setVisible(true);
         hyperlinkToken1.setVisible(false);
         percentDownloadJaCarta.setVisible(true);
         jaCartaDownloads = new jaCartaDownload();
@@ -239,7 +240,7 @@ public class EgaisController {
                     if (testExistInstallJaCarta.testExistInstallJaCarta() == true){
                         System.out.println("redyTokenAfterInstallJaCartaThredy.start");
                         redyTokenAfterInstallJaCartaThredy.start();
-                        progressBarToken.setVisible(false);
+                        BOXprogress.setVisible(false);
                     }else {
                         percentDownloadJaCarta.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
@@ -253,7 +254,7 @@ public class EgaisController {
 //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки FsrarCrypto
     @FXML
     private void onClickMethodDownloadFsrarCrypto(javafx.event.ActionEvent event) throws IOException {
-        progressBarFsrar.setVisible(true);
+        BOXprogress.setVisible(true);
         hyperlinkFsrarCrypto.setVisible(false);
         percentDownloadFsrarCrypto.setVisible(true);
         fsrarCryptoDownloads = new fsrarCryptoDownload();
@@ -267,7 +268,7 @@ public class EgaisController {
                     if (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true){
                         System.out.println("redyFsrarCryptoAfterInstallThredy.start");
                         redyFsrarCryptoAfterInstallThredy.start();
-                        progressBarFsrar.setVisible(false);
+                        BOXprogress.setVisible(false);
                     }else {
                         percentDownloadFsrarCrypto.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
@@ -281,7 +282,7 @@ public class EgaisController {
 //Запускаем поток по нажатию на кнопку скачать: скачивание установка и проставление зеленой галки UTM
     @FXML
     private void onClickMethodDownloadUTM(javafx.event.ActionEvent event) throws IOException {
-        progressBarUTM.setVisible(true);
+        BOXprogress.setVisible(true);
         hyperlinkUTM.setVisible(false);
         percentDownloadUTM.setVisible(true);
         utmDownloads = new utmDownload();
@@ -295,7 +296,7 @@ public class EgaisController {
                     if (testExistInstallUTM.testExistInstallUTM() == true){
                         System.out.println("redyAfterInstallUTMThredy.start");
                         redyAfterInstallUTMThredy.start();
-                        progressBarUTM.setVisible(false);
+                        BOXprogress.setVisible(false);
                     }else {
                         percentDownloadUTM.setText("Ошибка загрузки");
                         System.out.println("БЛЯ");
@@ -366,7 +367,7 @@ public class EgaisController {
                                 (testExistInstallRutoken.testExistInstallRutoken() == true))) {
                     percentDownloadRutoken.setVisible(false);
                     readyToken.setVisible(true);
-                    progressBarToken.setVisible(false);
+                    BOXprogress.setVisible(false);
                 }
             }
 
@@ -376,7 +377,7 @@ public class EgaisController {
                             (testExistInstallRutoken.testExistInstallRutoken() == true))) {
                 percentDownloadRutoken.setVisible(false);
                 readyToken.setVisible(true);
-                progressBarToken.setVisible(false);
+                BOXprogress.setVisible(false);
             }
         }
     }
@@ -419,7 +420,7 @@ public class EgaisController {
                                 (testExistInstallJaCarta.testExistInstallJaCarta() == true))) {
                     percentDownloadJaCarta.setVisible(false);
                     readyToken1.setVisible(true);
-                    progressBarToken.setVisible(false);
+                    BOXprogress.setVisible(false);
                 }
             }
 
@@ -429,7 +430,7 @@ public class EgaisController {
                             (testExistInstallJaCarta.testExistInstallJaCarta() == true))) {
                 percentDownloadJaCarta.setVisible(false);
                 readyToken1.setVisible(true);
-                progressBarToken.setVisible(false);
+                BOXprogress.setVisible(false);
             }
         }
     }
@@ -467,7 +468,7 @@ public class EgaisController {
                     System.out.println("запустили 3 условие проверки и реди");
                     percentDownloadFsrarCrypto.setVisible(false);
                     readyFsrarCrypto.setVisible(true);
-                    progressBarFsrar.setVisible(false);
+                    BOXprogress.setVisible(false);
                 }
             }
 
@@ -478,7 +479,7 @@ public class EgaisController {
                 System.out.println("запустили 4 условие проверки и реди");
                 percentDownloadFsrarCrypto.setVisible(false);
                 readyFsrarCrypto.setVisible(true);
-                progressBarFsrar.setVisible(false);
+                BOXprogress.setVisible(false);
             }
         }
     }
@@ -514,7 +515,7 @@ public class EgaisController {
                                 (testExistInstallFsrarCrypto.testExistInstallFsrarCrypto() == true))) {
                     percentDownloadUTM.setVisible(false);
                     readyUTM.setVisible(true);
-                    progressBarUTM.setVisible(false);
+                    BOXprogress.setVisible(false);
                 }
             }
 
@@ -524,7 +525,7 @@ public class EgaisController {
                             (testExistInstallUTM.testExistInstallUTM() == true))) {
                 percentDownloadUTM.setVisible(false);
                 readyUTM.setVisible(true);
-                progressBarUTM.setVisible(false);
+                BOXprogress.setVisible(false);
 
             }
         }
